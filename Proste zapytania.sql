@@ -1,0 +1,33 @@
+--zadanie 1
+--select * from ZESPOLY order by ID_ZESP;
+--zadanie 2
+--select * from PRACOWNICY order by ID_PRAC;
+--zadanie 3
+--select NAZWISKO, PLACA_POD*12 as ROCZNA_PLACA from PRACOWNICY;
+--zadanie 4
+--select nazwisko, etat, placa_pod + NVL(placa_dod,0) as MIESIECZNE_ZAROBKI from pracownicy;
+--zadanie 5
+--select * from zespoly order by nazwa;
+--zadanie 6
+--select distinct etat from pracownicy;
+--zadanie 7
+--select * from pracownicy where etat = 'ASYSTENT' order by nazwisko;
+--zadanie 8
+--select ID_PRAC, NAZWISKO, ETAT, PLACA_POD, ID_ZESP from pracownicy where id_zesp between 30 and 40  order by placa_pod desc;
+--zadanie 9
+--select  NAZWISKO, PLACA_POD, ID_ZESP from pracownicy where placa_pod between 300 and 800  order by nazwisko;
+--zadanie 10
+--select NAZWISKO, ETAT, ID_ZESP from pracownicy where NAZWISKO like '%SKI';
+--zadanie 11
+--select ID_PRAC, ID_SZEFA, NAZWISKO, PLACA_POD from pracownicy where PLACA_POD > 1000 and ID_SZEFA is not null;
+--zadanie 12
+--select NAZWISKO, ID_ZESP from pracownicy  where id_zesp = 20 and (nazwisko like '%SKI' or nazwisko like 'M%')  ;
+--zadanie 13
+--select NAZWISKO, ETAT, placa_pod/160 as STAWKA from pracownicy  where etat!='ASYSTENT' and etat!='ADIUNKT' and etat!='STAZYSTA' and placa_pod not between 400 and 800 order by STAWKA;
+--zadanie 14
+--select NAZWISKO, ETAT, PLACA_POD, PLACA_DOD from pracownicy where PLACA_POD + NVL(placa_dod,0) > 1000;
+--zadanie 15
+--select nazwisko || ' pracuje od ' || zatrudniony || 'i zarabia ' || PLACA_POD  from pracownicy where etat = 'PROFESOR' order by PLACA_POD desc;
+
+
+

@@ -1,0 +1,69 @@
+--(w zadaniach czêsto korzysta³em z stworzonych przez siebie kopii tabel poniwa¿ pracowa³em na deimos i nie mog³em cofaæ swoich poczynañ
+--Zadanie 1
+--insert into pr(id_prac, nazwisko, etat, id_szefa, zatrudniony, placa_pod, placa_dod, id_zesp)
+--SELECT 250,'KOWALSKI','ASYSTENT',NULL,to_date('2015-01-13','YYYY-MM-DD'),1500,null,10 FROM DUAL
+--UNION ALL SELECT 260,'ADAMSKI','ASYSTENT',NULL,to_date('2014-09-10','YYYY-MM-DD'),1500,null,10 FROM DUAL
+--UNION ALL SELECT 270,'NOWAK','ADIUNKT',NULL,to_date('1990-05-01','YYYY-MM-DD'),2050,540,20 FROM DUAL ; 
+--select * from pr order by id_prac desc FETCH FIRST 3 ROWS ONLY;
+--Zadanie 2
+--update pr p set (p.PLACA_POD,p.PLACA_DOD)= (select 1.1*PLACA_POD,case when placa_dod is null then 100 else PLACA_DOD*1.2 end from pr where p.ID_PRAC=ID_PRAC)
+--where p.ID_PRAC in (select id_prac from (select * from pr order by ROWNUM desc) FETCH FIRST 3 ROWS ONLY);
+--select * from (select * from pr order by ROWNUM desc) FETCH FIRST 3 ROWS ONLY;
+--Zadanie 3
+--create table zesp as select * from ZESPOLY;
+--insert into zesp(id_zesp, nazwa, adres) select 60,'BAZY DANYCH','PIOTROWO 2' from dual;
+--select * from zesp order by id_zesp desc fetch first 1 rows only;
+--Zadanie 4
+--update pr p set (p.id_zesp)=(select id_zesp from zesp where nazwa = 'BAZY DANYCH')
+--where id_prac in (select id_prac from (select * from pr order by rownum desc) fetch first 3 rows only);
+--select * from pr where id_zesp = (select id_zesp from zesp where nazwa='BAZY DANYCH')
+--Zadanie 5
+--update pr p set (p.id_szefa)=(select id_prac from pr where nazwisko ='MORZY')
+--where id_zesp=(select id_zesp from zesp where nazwa='BAZY DANYCH');
+--select * from pr where id_szefa = (select id_prac from pr where nazwisko ='MORZY');
+--Zadanie 6
+--delete from zesp where nazwa='BAZY DANYCH';
+--ORA-02292: integrity constraint (INF141202.FK_ID_ZESP) violated - child record found
+--probujemy usunac rodzica-rodzica nie usuwajac wczesniej rekordu-dziecka
+--najpierw musimy usun¹æ relacje ³¹cz¹c¹ z pracownikami tego zespo³u
+--Zadanie 7
+--delete from pr where id_zesp = (select id_zesp from zesp where nazwa = 'BAZY DANYCH');
+--delete from zesp where nazwa = 'BAZY DANYCH';
+--select * from pr where id_zesp=(select id_zesp from zesp where nazwa = 'BAZY DANYCH'); 
+--select * from zespoly where nazwa = 'BAZY DANYCH';
+--Zadanie 8
+--select p.nazwisko, p.placa_pod,(select avg(placa_pod)*0.1 from pracownicy where id_zesp=p.id_zesp) as Podwyzka
+--from pracownicy p order by p.nazwisko;
+--Zadanie 9
+--update pr p set(placa_pod)=(select avg(placa_pod)*0.1 from pr where id_zesp=p.id_zesp)+p.placa_pod;
+--select nazwisko, placa_pod from pr order by nazwisko;
+--Zadanie 10
+--select * from pr order by placa_pod asc fetch first 1 rows only;
+--Zadanie 11
+--update pr p set (p.placa_pod)=(select round(avg(placa_pod),2) from pr)
+--where p.placa_pod=(select min(placa_pod) from pr);
+--Zadanie 12
+--update pr p set (p.PLACA_DOD)=(select avg(z.placa_pod) from pr z where z.id_szefa=(select id_prac from pr where nazwisko='MORZY')) where p.id_zesp=20;
+--select nazwisko, placa_dod from pr where id_zesp=20 order by nazwisko;
+--Zadanie 13
+--UPDATE (select * from pr  join zespoly  using(id_zesp)) set placa_pod = placa_pod*1.25 where nazwa='SYSTEMY ROZPROSZONE';
+--select p.PLACA_POD,p.NAZWISKO from pr p join zespoly z on p.id_zesp=z.ID_ZESP where p.id_zesp=20 order by nazwisko;
+--Zadanie 14
+--select p.nazwisko as pracownik ,z.nazwisko as szef from pr p  join pr z on(p.id_szefa=z.id_prac) and z.nazwisko='MORZY';
+--delete from (select * from pracownicy p join pracownicy z on(p.id_szefa=z.id_prac) and z.nazwisko='MORZY');
+--Zadanie 15
+--select * from pracownicy order by nazwisko;
+--Zadanie 16
+--create sequence PRAC_SEQ start with 300 increment by 10
+--Zadanie 17
+--insert into PRACOWNICY(id_prac,nazwisko,etat,PLACA_POD) values(PRAC_SEQ.nextval,'Trabczynski','STAZYSTA',1000);
+--Zadanie 18
+--update PRACOWNICY set  PLACA_DOD=PRAC_SEQ.currval where nazwisko='Trabczynski';
+--Zadanie 19
+--delete from PRACOWNICY where NAZWISKO='Trabczynski';
+--Zadanie 20
+--create sequence MALA_SEQ maxvalue 10;
+--ORA-08004: sequence MALA_SEQ.NEXTVAL exceeds MAXVALUE and cannot be instantiated Position:0
+--Zadanie 21
+--drop sequence MALA_SEQ;
+

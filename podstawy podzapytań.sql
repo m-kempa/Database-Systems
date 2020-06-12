@@ -1,0 +1,31 @@
+--Zadanie 1
+--SELECT nazwisko, etat, id_zesp FROM pracownicy WHERE id_zesp = (SELECT id_zesp FROM pracownicy where nazwisko = 'BRZEZINSKI') order by nazwisko;
+--Zadanie 2
+--SELECT p.nazwisko, p.etat, z.nazwa FROM pracownicy p left OUTER JOIN ZESPOLY z ON z.id_zesp = p.id_zesp WHERE p.id_zesp = (SELECT id_zesp FROM pracownicy where nazwisko = 'BRZEZINSKI') order by nazwisko;
+--Zadanie 3
+--SELECT nazwisko, etat, zatrudniony FROM pracownicy WHERE etat = 'PROFESOR' and zatrudniony = (SELECT MIN(zatrudniony) FROM pracownicy WHERE etat = 'PROFESOR');
+--Zadanie 4
+--select NAZWISKO, ZATRUDNIONY, ID_ZESP from pracownicy where ZATRUDNIONY in (SELECT MAX(zatrudniony) FROM pracownicy group by id_zesp) order by zatrudniony;
+--Zadanie 5
+ --select ID_ZESP, NAZWA, ADRES from zespoly where id_zesp not in (SELECT id_zesp FROM pracownicy);
+ --Zadanie 6
+--select p.nazwisko from pracownicy p, pracownicy z
+--where p.id_prac=z.id_szefa and p.id_prac not in(select id_szefa from pracownicy where etat='STAZYSTA') and p.etat like 'PROFESOR';
+--Zadanie 7
+--select id_zesp,sum(placa_pod) from pracownicy group by id_zesp
+--having sum(placa_pod)>=all(select sum(placa_pod)from pracownicy group by id_zesp);
+--Zadanie 8
+--SELECT nazwa, sum(placa_pod) AS SUMA_PLAC FROM pracownicy JOIN zespoly USING(id_zesp) GROUP BY nazwa
+--HAVING sum(placa_pod) = (SELECT max(sum(placa_pod)) FROM pracownicy JOIN zespoly USING(id_zesp) GROUP BY id_zesp);
+--Zadanie 9
+--SELECT nazwa, count(id_prac) AS ILU_PRACOWNIKOW FROM pracownicy JOIN zespoly USING(id_zesp) GROUP BY nazwa
+--HAVING count(id_prac) > (SELECT count(id_prac) FROM pracownicy JOIN zespoly USING(id_zesp) where nazwa = 'ADMINISTRACJA' GROUP BY id_zesp) order by nazwa;
+--Zadanie 10
+--select e.nazwa from pracownicy p join etaty e on p.etat = e.nazwa group by e.nazwa
+--having count(*)>=all(select count(*) from pracownicy p join etaty e on p.etat = e.nazwa group by e.nazwa);
+--Zadanie 11
+--select e.nazwa, listagg(p.nazwisko,', ') within group(order by nazwisko) as pracownicy from pracownicy p join etaty e on p.etat = e.nazwa group by e.nazwa
+--having count(*)>=all(select count(*) from pracownicy p join etaty e on p.etat = e.nazwa group by e.nazwa);
+--Zadanie 12
+--select p.nazwisko as pracownik, z.nazwisko as szef from pracownicy p join  pracownicy z on p.id_szefa=z.id_prac
+--where (z.placa_pod-p.placa_pod)<=all( select z.placa_pod-p.placa_pod from pracownicy p join  pracownicy z on p.id_szefa=z.id_prac where p.id_szefa=z.id_prac);

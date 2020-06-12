@@ -1,0 +1,22 @@
+--Zadanie 1
+--SELECT NAZWISKO, ETAT, p.ID_ZESP, NAZWA FROM pracownicy p INNER JOIN zespoly z ON p.id_zesp = z.id_zesp order by NAZWISKO;
+--Zadanie 2
+--SELECT NAZWISKO, ETAT, p.ID_ZESP, NAZWA FROM pracownicy p INNER JOIN zespoly z ON p.id_zesp = z.id_zesp where adres = 'PIOTROWO 3A' order by NAZWISKO;
+--Zadanie 3
+--select NAZWISKO, ETAT, PLACA_POD, PLACA_MIN, PLACA_MAX from pracownicy p inner join etaty e on p.etat = e.nazwa;
+--Zadanie 4
+--select NAZWISKO, ETAT, PLACA_POD, PLACA_MIN, PLACA_MAX, (CASE WHEN placa_pod BETWEEN placa_min AND placa_max THEN 'OK' else 'Nie' END) as CZY_PENSJA_OK from pracownicy p inner join etaty e on p.etat = e.nazwa;
+--Zadanie 5
+--select NAZWISKO, ETAT, PLACA_POD, PLACA_MIN, PLACA_MAX from pracownicy p inner join etaty e on p.etat = e.nazwa where placa_pod NOT BETWEEN placa_min AND placa_max;
+--Zadanie 6
+--select NAZWISKO, PLACA_POD, ETAT, e.nazwa as KAT_PLAC, PLACA_MIN, PLACA_MAX from pracownicy p inner join etaty e on placa_pod BETWEEN placa_min AND placa_max order by NAZWISKO, e.nazwa;
+--Zadanie 7
+--select NAZWISKO, PLACA_POD, ETAT, e.nazwa as KAT_PLAC, PLACA_MIN, PLACA_MAX from pracownicy p inner join etaty e on placa_pod BETWEEN placa_min AND placa_max where e.nazwa = 'SEKRETARKA' order by NAZWISKO;
+--Zadanie 8
+--SELECT p.nazwisko AS pracownik, p.id_prac, s.nazwisko AS szef, p.id_szefa FROM pracownicy p INNER JOIN pracownicy s ON p.id_szefa = s.id_prac order by p.nazwisko;
+--zadanie 9
+--SELECT p.nazwisko AS pracownik, p.ZATRUDNIONY, s.nazwisko AS szef, s.ZATRUDNIONY as zat_szef, EXTRACT(YEAR FROM p.ZATRUDNIONY) - EXTRACT(YEAR FROM s.ZATRUDNIONY) as LATA FROM pracownicy p INNER JOIN pracownicy s ON p.id_szefa = s.id_prac WHERE (EXTRACT(YEAR FROM p.ZATRUDNIONY) - EXTRACT(YEAR FROM s.ZATRUDNIONY)) < 10 order by p.zatrudniony, p.nazwisko;
+--Zadanie 10
+--select z.nazwa, count(p.nazwisko) as LICZBA, sum(PLACA_POD)/count(p.nazwisko) as SREDNIA_PLACA from zespoly z inner join pracownicy p on z.ID_ZESP = p.ID_ZESP group by z.nazwa order by z.nazwa;
+--Zadanie 11
+--select z.nazwa, (CASE WHEN count(p.nazwisko) > 6 THEN 'du¿y' WHEN count(p.nazwisko) < 3 THEN 'ma³y' ELSE 'œredni' END) as ETYKIETA from zespoly z inner join pracownicy p on z.ID_ZESP = p.ID_ZESP group by z.nazwa order by z.nazwa;

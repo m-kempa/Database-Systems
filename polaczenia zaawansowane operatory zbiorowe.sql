@@ -1,0 +1,34 @@
+--Po³¹czenia zaawansowane
+--Zad 1
+--INSERT INTO pracownicy(id_prac, nazwisko) VALUES ((SELECT max(id_prac) + 1 FROM pracownicy), 'WOLNY');
+--SELECT distinct nazwisko, z.id_zesp, nazwa FROM pracownicy p left OUTER JOIN ZESPOLY z ON z.id_zesp = p.id_zesp order by nazwisko;
+--Zad 2
+--select nazwa, z.id_zesp, (case when nazwisko is null then 'brak pracowników' else nazwisko end) as pracownicy from zespoly z left join pracownicy p on z.id_zesp = p.id_zesp order by nazwa, nazwisko ;
+--Zad 3
+--DELETE FROM pracownicy WHERE nazwisko = 'WOLNY';
+--select (case when  nazwa is null then 'brak zespo³u' else nazwa end) as ZESPOL , (case when nazwisko is null then 'brak pracowników' else nazwisko end) as PRACOWNICY from zespoly z FULL OUTER JOIN pracownicy p on z.id_zesp = p.id_zesp order by nazwa, nazwisko ;
+--Zad 4
+--select nazwa, count(nazwisko) as LICZBA, sum(PLACA_POD) as SUMA_PLAC from zespoly z left JOIN pracownicy p on z.id_zesp = p.id_zesp  group by nazwa ;
+--Zad 5
+--select nazwa from zespoly z left JOIN pracownicy p on z.id_zesp = p.id_zesp where nazwisko is null;
+--Zad 6
+--SELECT p.nazwisko AS pracownik, p.id_prac, (case when s.nazwisko is null then ' ' else  s.nazwisko end) AS szef, p.id_szefa FROM pracownicy p left JOIN pracownicy s ON p.id_szefa = s.id_prac order by p.nazwisko;
+--Zad 7
+--select s.nazwisko as pracownik, count(p.nazwisko) as liczba_podwladnych FROM pracownicy p right JOIN pracownicy s ON p.id_szefa = s.id_prac group by s.nazwisko;
+--Zad 8
+--SELECT p.nazwisko,  p.etat, p.placa_pod, nazwa, (case when s.nazwisko is null then ' ' else  s.nazwisko end) AS szef FROM pracownicy p left JOIN pracownicy s ON p.id_szefa = s.id_prac join zespoly z on p.ID_ZESP = z.ID_ZESP  order by p.nazwisko;
+--Zad 9
+--select nazwisko, nazwa from pracownicy cross join zespoly order by nazwisko;
+--Zad 10
+--select count(*) from etaty, pracownicy, zespoly;
+--Operatory zbiorowe
+--Zad 11
+--select etat from pracownicy where EXTRACT(YEAR FROM ZATRUDNIONY) = 1992 union select etat from pracownicy where EXTRACT(YEAR FROM ZATRUDNIONY) = 1993 order by etat;
+--Zad 12
+--select z.id_zesp from zespoly z left join pracownicy p on z.ID_ZESP = p.ID_ZESP where nazwisko is null;
+--Zad 13
+--select z.id_zesp, z.nazwa from zespoly z left join pracownicy p on z.ID_ZESP = p.ID_ZESP where nazwisko is null;
+--Zad 14
+--select nazwisko, placa_pod, 'Poni¿ej 480 z³otych' as PROG from pracownicy where placa_pod < 480
+--union all select nazwisko, placa_pod, 'Dok³adnie 480 z³otych' as PROG from pracownicy where placa_pod = 480
+--union all select nazwisko, placa_pod, 'Powy¿ej 480 z³otych' as PROG from pracownicy where placa_pod > 480 order by placa_pod;
